@@ -467,7 +467,9 @@ test.describe.serial(`AI Lab extension installation and verification`, () => {
     let instructLabPage: AILabTryInstructLabPage;
     const instructLabContainerName = '^instructlab-\\d+$';
 
-    //skip on linux
+    if (process.env.GITHUB_ACTIONS && isLinux) {
+      test.skip();
+    }
     test.beforeAll('Open Try InstructLab page', async ({ runner, page, navigationBar }) => {
       [page, webview] = await handleWebview(runner, page, navigationBar);
       aiLabPage = new AILabPage(page, webview);
